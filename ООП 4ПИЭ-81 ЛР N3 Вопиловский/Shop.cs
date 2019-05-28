@@ -13,33 +13,6 @@ namespace ООП_4ПИЭ_81_ЛР_N3_Вопиловский
         List<Goods> order = new List<Goods>(); // вспомогательный класс: история покупок
 
         public Shop() { } //инициализация
-
-        public void basketClear() // очистить корзину
-        {
-            basket = new List<Goods>();
-        }
-        public void orderClear() // очистить историю 
-        {
-            order = new List<Goods>();
-        }
-        public void addStockItem(string name, string producer, int category, int price)
-        {  // добавить товар в магазин
-            this.stock.Add(new Goods(this.stock.Count, name, producer, category, price));
-        }
-        public void addStock(Goods newItem) // добавить товар в магазин объектом
-        {
-            newItem.Id = this.stock.Count;
-            this.stock.Add(newItem);
-        }
-        public void addBasketItem(string name, string producer, int category, int price)
-        {    // добавить товар в корзину
-            this.basket.Add(new Goods(this.basket.Count, name, producer, category, price));
-        }
-        public void addOrderItem(string name, string producer, int category, int price)
-        {   // добавить товар в историю
-            this.order.Add(new Goods(this.order.Count, name, producer, category, price));
-        }
-
         public int StockLength  // свойство количестево товаров в магазине
         {
             get
@@ -63,31 +36,6 @@ namespace ООП_4ПИЭ_81_ЛР_N3_Вопиловский
             }
             
         }
-
-        public void getStockItem(int i, out int id, out string name, out string producer, out int category, out int price)
-        {   // получить данные о товаре по ИД
-            this.stock[i].Get(out int _id, out string _name, out string _producer, out int _category, out int _price);
-            id = _id;
-            name = _name;
-            producer = _producer;
-            category = _category;
-            price = _price;
-        }
-
-        public List<Goods> getStockFilter(int category) //получить отфильтрованный по категории список товаров
-        {   
-            List<Goods> Filter = new List<Goods>();
-            for (int i = 0; i < this.StockLength; i++)
-            {
-                this.getStockItem(i, out int _id, out string _name, out string _producer, out int _category, out int _price);
-                if (category == _category)
-                {
-                    Filter.Add(new Goods(_id, _name, _producer, _category, _price));
-                }
-            }
-            return Filter;
-        }
-
         public int getStockSumma // сумма цен всех товаров в магазине;
         {
             get
@@ -128,6 +76,53 @@ namespace ООП_4ПИЭ_81_ЛР_N3_Вопиловский
             }
         }
 
+        public void basketClear() // очистить корзину
+        {
+            basket = new List<Goods>();
+        }
+        public void orderClear() // очистить историю 
+        {
+            order = new List<Goods>();
+        }
+        public void addStockItem(string name, string producer, int category, int price)
+        {  // добавить товар в магазин
+            this.stock.Add(new Goods(this.stock.Count, name, producer, category, price));
+        }
+        public void addStock(Goods newItem) // добавить товар в магазин объектом
+        {
+            newItem.Id = this.stock.Count;
+            this.stock.Add(newItem);
+        }
+        public void addBasketItem(string name, string producer, int category, int price)
+        {    // добавить товар в корзину
+            this.basket.Add(new Goods(this.basket.Count, name, producer, category, price));
+        }
+        public void addOrderItem(string name, string producer, int category, int price)
+        {   // добавить товар в историю
+            this.order.Add(new Goods(this.order.Count, name, producer, category, price));
+        }
+        public void getStockItem(int i, out int id, out string name, out string producer, out int category, out int price)
+        {   // получить данные о товаре по ИД
+            this.stock[i].Get(out int _id, out string _name, out string _producer, out int _category, out int _price);
+            id = _id;
+            name = _name;
+            producer = _producer;
+            category = _category;
+            price = _price;
+        }
+        public List<Goods> getStockFilter(int category) //получить отфильтрованный по категории список товаров
+        {   
+            List<Goods> Filter = new List<Goods>();
+            for (int i = 0; i < this.StockLength; i++)
+            {
+                this.getStockItem(i, out int _id, out string _name, out string _producer, out int _category, out int _price);
+                if (category == _category)
+                {
+                    Filter.Add(new Goods(_id, _name, _producer, _category, _price));
+                }
+            }
+            return Filter;
+        }
         public int getStockCatItens(int catMin, int catMax) // сумма цен всех товаров в магазине;
         {
             int sum = 0;
@@ -142,9 +137,8 @@ namespace ООП_4ПИЭ_81_ЛР_N3_Вопиловский
             Console.WriteLine(sum);
             return sum;
         }
-
         public void getBasketItem(int i, out int id, out string name, out string producer, out int category, out int price)
-        {
+        {   // получить данные о товаре по ИД в корзине
             this.basket[i].Get(out int _id, out string _name, out string _producer, out int _category, out int _price);
             id = _id;
             name = _name;
@@ -152,41 +146,14 @@ namespace ООП_4ПИЭ_81_ЛР_N3_Вопиловский
             category = _category;
             price = _price;
         }
-
-        public List<Goods> getBasketFilter(int category)
-        {
-            List<Goods> Filter = new List<Goods>();
-            for (int i = 0; i < this.BasketLength; i++)
-            {
-                this.getBasketItem(i, out int _id, out string _name, out string _producer, out int _category, out int _price);
-                if (category == _category)
-                {
-                    Filter.Add(new Goods(_id, _name, _producer, _category, _price));
-                }
-            }
-            return Filter;
-        }
         public void getOrderItem(int i, out int id, out string name, out string producer, out int category, out int price)
-        {
+        {   // получить данные о товаре по ИД в истории
             this.order[i].Get(out int _id, out string _name, out string _producer, out int _category, out int _price);
             id = _id;
             name = _name;
             producer = _producer;
             category = _category;
             price = _price;
-        }
-        public List<Goods> getOrderFilter(int category)
-        {
-            List<Goods> Filter = new List<Goods>();
-            for (int i = 0; i < this.OrderLength; i++)
-            {
-                this.getOrderItem(i, out int _id, out string _name, out string _producer, out int _category, out int _price);
-                if (category == _category)
-                {
-                    Filter.Add(new Goods(_id, _name, _producer, _category, _price));
-                }
-            }
-            return Filter;
         }
     }
 }
